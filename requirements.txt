@@ -1,0 +1,6 @@
+# 只需要 QtCore / QtGui / QtWidgets，Essentials 足够；想用完整套件可改成 PySide6
+PySide6-Essentials>=6.6
+# 不要升到 2.x：2.x 的 pymupdf.layout 会捆绑 49MB ONNX 模型并在 import 时加载，
+# PyInstaller 打包后缺资源直接崩，本项目也用不到版面分析。
+PyMuPDF>=1.24,<2.0
+requests>=2.31

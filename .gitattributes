@@ -1,0 +1,13 @@
+# 统一换行，避免跨平台 diff 噪音
+* text=auto eol=lf
+
+# Windows 脚本保持 CRLF（cmd / PowerShell 更习惯）
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制
+*.png binary
+*.ico binary
+*.pdf binary
+*.zip binary

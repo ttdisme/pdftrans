@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# PyInstaller
+build/
+dist/
+*.manifest
+
+# 运行时数据（配置、缓存、日志）
+data/
+*.log
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
+# 本地生成
+*.zip
+*.png.bak
+_*.png
+_*.log
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini
