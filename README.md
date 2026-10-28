@@ -1,5 +1,6 @@
 # PDFTrans · PDF 论文翻译
 
+[![Release](https://img.shields.io/github/v/release/ttdisme/pdftrans?color=blue)](https://github.com/ttdisme/pdftrans/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](#)
@@ -23,7 +24,19 @@ API，也可以接任意 **OpenAI 兼容**的大模型（DeepSeek、通义千问
 - **拖放打开**：把 PDF 拖进窗口即可，支持一次拖多个。
 - **学术翻译提示词**：内置「忠实、术语、公式与引用标记保原样、只输出译文」的约束，可自行改写。
 
-## 安装（从源码运行）
+## 安装
+
+### 方式一：安装包（推荐，免 Python）
+
+从 [Releases](https://github.com/ttdisme/pdftrans/releases/latest) 下载 **PDFTrans-Setup-1.0.0.exe**，双击运行：
+
+- 装到 `%LOCALAPPDATA%\Programs\PDFTrans`，**不需要管理员权限**（不写 Program Files、不碰系统目录）
+- 自动创建开始菜单与桌面快捷方式，卸载走「设置 → 应用」或安装目录里的 `unins000.exe`
+- 首次运行若提示「无法验证发布者」，点「运行」即可——安装包没做代码签名
+
+不想安装：下载同一 Release 里的 `PDFTrans-1.0.0-win64-portable.zip`，解压后直接跑 `PDFTrans.exe`。
+
+### 方式二：从源码运行
 
 需要 Python 3.10+。
 
@@ -63,6 +76,21 @@ python -m PyInstaller --noconfirm --clean pdftrans.spec
 安全策略拦掉（报 `Could not create temporary directory!`），并且冷启动要好几秒。目录模式不写
 临时目录、启动 1–2 秒。想要单文件可自行把 spec 里的 `COLLECT(...)` 换成把 `a.binaries`/`a.datas`
 塞回 `EXE(...)`。
+
+### 打成安装包
+
+需要 [Inno Setup 6](https://jrsoftware.org/isdl.php)（`ISCC.exe` 在 PATH 或写全路径）：
+
+```bat
+ISCC.exe pdftrans.iss
+```
+
+产物 `dist\PDFTrans-Setup-<版本>.exe`：
+
+- 装到 `{autopf}\PDFTrans`，`PrivilegesRequired=lowest` 使其落到 `%LOCALAPPDATA%\Programs`，全程无 UAC
+- 开始菜单 + 可选桌面快捷方式、卸载程序、卸载时清理程序旁的 `data\`
+- 中文界面用 `tools/ChineseSimplified.isl`（取自 Inno Setup 官方仓库，随仓库一起管理，不依赖本机安装的语言包）
+- `pdftrans.iss` 里 `#define AppVersion` 改版本号即可发新版
 
 ## 翻译通道怎么配
 
