@@ -16,6 +16,9 @@ API，也可以接任意 **OpenAI 兼容**的大模型（DeepSeek、通义千问
 
 - **多标签**：一个窗口同时开多篇文献，各自的页码、缩放、滚动位置、选区互不干扰；右侧翻译栏共享。
 - **划词即译**：单击翻整句，拖动翻任意片段（可跨行跨页），双击翻整段；粒度可在设置里改。
+- **解释学术名词**：选中 `anammox`、`EPS`、`quorum sensing` 这类术语按 `Ctrl+Shift+E`，
+  得到的是「定义 / 展开 / 用途 / 备注」四段式解释——它是什么、怎么起作用、作者为什么提它，
+  而不是直译（走 AI 通道）。
 - **整页翻译**：`Ctrl+Enter` 把当前页正文按段落拼好一次翻完。
 - **流式输出**：AI 通道逐字返回，不用等整段生成。
 - **六种通道**：Google / Bing（免 key，开箱可用）、百度、有道、DeepL、OpenAI 兼容大模型。
@@ -28,13 +31,13 @@ API，也可以接任意 **OpenAI 兼容**的大模型（DeepSeek、通义千问
 
 ### 方式一：安装包（推荐，免 Python）
 
-从 [Releases](https://github.com/ttdisme/pdftrans/releases/latest) 下载 **PDFTrans-Setup-1.0.0.exe**，双击运行：
+从 [Releases](https://github.com/ttdisme/pdftrans/releases/latest) 下载 **PDFTrans-Setup-1.0.1.exe**，双击运行：
 
 - 装到 `%LOCALAPPDATA%\Programs\PDFTrans`，**不需要管理员权限**（不写 Program Files、不碰系统目录）
 - 自动创建开始菜单与桌面快捷方式，卸载走「设置 → 应用」或安装目录里的 `unins000.exe`
 - 首次运行若提示「无法验证发布者」，点「运行」即可——安装包没做代码签名
 
-不想安装：下载同一 Release 里的 `PDFTrans-1.0.0-win64-portable.zip`，解压后直接跑 `PDFTrans.exe`。
+不想安装：下载同一 Release 里的 `PDFTrans-1.0.1-win64-portable.zip`，解压后直接跑 `PDFTrans.exe`。
 
 ### 方式二：从源码运行
 
@@ -137,7 +140,8 @@ ISCC.exe pdftrans.iss
 | 本地 Ollama | `http://127.0.0.1:11434/v1` | `qwen2.5:7b` |
 
 - 「额外参数」透传给 `/chat/completions`，例如 `{"enable_thinking": false}`。
-- 「系统提示词」就是学术翻译的约束，可自行改写。
+- 「系统提示词」是翻译用的约束；「解释名词提示词」是 `Ctrl+Shift+E` 用的，两个都能改。
+  解释走 AI 通道（Google / Bing 这类只做翻译），没填 key 时按 `Ctrl+Shift+E` 会自动弹出设置页。
 - 「测试当前通道」会发一句英文试翻，直接看到返回或报错原因。
 
 免 key 通道实现说明：
@@ -153,6 +157,7 @@ ISCC.exe pdftrans.iss
 | `Ctrl+W` | 关闭当前标签 |
 | `Ctrl+Tab` / `Ctrl+Shift+Tab` | 切换标签 |
 | `Ctrl+Shift+T` | 翻译选区 |
+| `Ctrl+Shift+E` | 解释选中名词（术语解释） |
 | `Ctrl+Enter` | 翻译当前整页 |
 | `Ctrl+Shift+V` | 翻译剪贴板 |
 | `Ctrl+滚轮` / `Ctrl+0` / `Ctrl+9` | 缩放 / 适应宽度 / 适应整页 |
@@ -171,11 +176,13 @@ ISCC.exe pdftrans.iss
 
 ```bat
 PDFTrans.exe --selftest examples\sample-paper.pdf --shot a.png --translate --drop
+:: 想验证「解释名词」这条链路就换成 --explain
+PDFTrans.exe --selftest examples\sample-paper.pdf --shot b.png --explain
 ```
 
-会起窗口开标签、真翻一句、模拟一次拖放、截图并写 `a.log`（`tabs=` / `pages=` / `data_dir=` /
-`cache_error=` / `drop_pages=` / `translate=`），退出码 0 表示正常。崩溃日志写在数据目录下的
-`startup-error.log`，缓存不可用时另记 `cache-error.log`。
+会起窗口开标签、真翻一句（`--explain` 则真解释一个术语）、模拟一次拖放、截图并写 `a.log`
+（`tabs=` / `pages=` / `data_dir=` / `cache_error=` / `drop_pages=` / `mode=` / `translate=`），
+退出码 0 表示正常。崩溃日志写在数据目录下的 `startup-error.log`，缓存不可用时另记 `cache-error.log`。
 
 ## 项目结构
 
