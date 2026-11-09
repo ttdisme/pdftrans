@@ -18,7 +18,8 @@ API，也可以接任意 **OpenAI 兼容**的大模型（DeepSeek、通义千问
 - **划词即译**：单击翻整句，拖动翻任意片段（可跨行跨页），双击翻整段；粒度可在设置里改。
 - **解释学术名词**：选中 `anammox`、`EPS`、`quorum sensing` 这类术语按 `Ctrl+Shift+E`，
   得到的是「定义 / 展开 / 用途 / 备注」四段式解释——它是什么、怎么起作用、作者为什么提它，
-  而不是直译（走 AI 通道）。
+  而不是直译（走 AI 通道）。**PDF 正文和右侧「原文」框里都能划词**；原文框还带右键菜单
+  （解释选中名词 / 翻译选中片段），原文内容不会被冲掉，只在标题上标出处理的是哪一段。
 - **整页翻译**：`Ctrl+Enter` 把当前页正文按段落拼好一次翻完。
 - **流式输出**：AI 通道逐字返回，不用等整段生成。
 - **六种通道**：Google / Bing（免 key，开箱可用）、百度、有道、DeepL、OpenAI 兼容大模型。
@@ -31,13 +32,13 @@ API，也可以接任意 **OpenAI 兼容**的大模型（DeepSeek、通义千问
 
 ### 方式一：安装包（推荐，免 Python）
 
-从 [Releases](https://github.com/ttdisme/pdftrans/releases/latest) 下载 **PDFTrans-Setup-1.0.1.exe**，双击运行：
+从 [Releases](https://github.com/ttdisme/pdftrans/releases/latest) 下载 **PDFTrans-Setup-1.0.2.exe**，双击运行：
 
 - 装到 `%LOCALAPPDATA%\Programs\PDFTrans`，**不需要管理员权限**（不写 Program Files、不碰系统目录）
 - 自动创建开始菜单与桌面快捷方式，卸载走「设置 → 应用」或安装目录里的 `unins000.exe`
 - 首次运行若提示「无法验证发布者」，点「运行」即可——安装包没做代码签名
 
-不想安装：下载同一 Release 里的 `PDFTrans-1.0.1-win64-portable.zip`，解压后直接跑 `PDFTrans.exe`。
+不想安装：下载同一 Release 里的 `PDFTrans-1.0.2-win64-portable.zip`，解压后直接跑 `PDFTrans.exe`。
 
 ### 方式二：从源码运行
 
